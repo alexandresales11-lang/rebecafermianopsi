@@ -1,0 +1,6 @@
+{
+  "name": "Rebeca Fermiano | Psicanálise & Hipnoterapia Clínica",
+  "description": "Site profissional da psicanalista e hipnoterapeuta clínica Rebeca Fermiano. Psicoterapia integrativa, mentoria hipnótica e palestras em Guarulhos e online.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

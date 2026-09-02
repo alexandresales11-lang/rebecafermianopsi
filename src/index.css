@@ -1,0 +1,23 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --color-petrol: #0A3D42;
+    --color-petrol-dark: #072B2F;
+    --color-petrol-light: #12555C;
+    --color-sand: #F8EFE7;
+    --color-sand-light: #FCF8F4;
+    --color-sand-dark: #ECDCCE;
+    --color-sand-card: #F4E7DA;
+  }
+
+  body {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    background-color: var(--color-sand);
+    color: var(--color-petrol);
+  }
+
+  h1, h2, h3, .font-serif-display {
+    font-family: 'Cormorant Garamond', serif;
+  }
+}
