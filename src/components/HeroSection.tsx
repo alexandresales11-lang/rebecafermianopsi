@@ -32,7 +32,7 @@ export const HeroSection: React.FC = () => {
             </h1>
 
             {/* 2. Photo + Audio Badge on MOBILE ONLY (Immediately after headline) */}
-            <div className="block lg:hidden my-2 sm:my-4 flex justify-center">
+            <div className="block lg:hidden my-2 sm:my-4 flex flex-col items-center">
               <div className="relative w-full max-w-sm">
                 <div className="relative rounded-3xl overflow-hidden shadow-2xl border-2 border-[#0A3D42]/20 bg-[#ECDCCE]">
                   <img
@@ -41,21 +41,24 @@ export const HeroSection: React.FC = () => {
                     referrerPolicy="no-referrer"
                     className="w-full h-[400px] sm:h-[460px] object-cover object-top"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#0A3D42]/85 via-transparent to-transparent" />
-                  <div className="absolute bottom-5 left-5 right-5 text-[#F8EFE7] text-left">
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#0A3D42]/90 via-[#0A3D42]/20 to-transparent" />
+                  <div className="absolute bottom-4 left-4 right-4 text-[#F8EFE7] text-left">
                     <h3 className="font-serif-display text-xl sm:text-2xl font-bold">
                       Rebeca Fermiano
                     </h3>
                     <p className="text-xs text-[#F8EFE7]/90 font-medium mt-0.5">
                       Especialista em Reprogramação Mental &amp; Cura de Traumas
                     </p>
-                    <p className="text-[11px] text-[#F8EFE7]/70 font-mono mt-1">
+                    <p className="text-[11px] text-[#F8EFE7]/75 font-mono mt-1">
                       Centro, Guarulhos - SP • Atendimento Presencial &amp; Online
                     </p>
                   </div>
                 </div>
-                {/* Voice Intro Player over photo */}
-                <VoiceIntroBadge className="absolute -bottom-5 -left-2 sm:-left-4 max-w-[94%] z-20" />
+              </div>
+
+              {/* Voice Intro Player positioned gracefully right below the photo, without covering any texts */}
+              <div className="w-full max-w-sm mt-3 px-1">
+                <VoiceIntroBadge className="w-full z-20 shadow-lg" />
               </div>
             </div>
 
@@ -69,11 +72,11 @@ export const HeroSection: React.FC = () => {
               <a
                 id="btn-hero-primary-cta"
                 href="#trilha-diagnostico"
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-3 bg-[#0A3D42] hover:bg-[#072B2F] text-[#F8EFE7] font-semibold text-sm sm:text-base py-4 px-8 rounded-full shadow-lg transition-all hover:scale-[1.02] active:scale-[0.98]"
+                className="w-full sm:w-auto inline-flex items-center justify-between gap-4 bg-[#0A3D42] hover:bg-[#072B2F] text-[#F8EFE7] font-semibold text-sm sm:text-base py-4 px-7 sm:px-8 rounded-full shadow-lg transition-all hover:scale-[1.02] active:scale-[0.98]"
               >
-                <BrainCircuit className="w-5 h-5 text-[#F8EFE7]" />
-                <span>Fazer Diagnóstico Emocional Gratuito</span>
-                <ArrowRight className="w-4 h-4" />
+                <BrainCircuit className="w-5 h-5 text-[#F8EFE7] shrink-0" />
+                <span className="mx-auto text-center px-1">Fazer Diagnóstico Emocional</span>
+                <ArrowRight className="w-5 h-5 text-[#F8EFE7] shrink-0" />
               </a>
 
               <a
@@ -116,27 +119,27 @@ export const HeroSection: React.FC = () => {
                   src={CONTACT_INFO.mainPhoto}
                   alt="Dra. Rebeca Fermiano - Psicanalista e Hipnoterapeuta"
                   referrerPolicy="no-referrer"
-                  className="w-full h-[480px] sm:h-[560px] object-cover object-top transition-transform duration-700 hover:scale-105"
+                  className="w-full h-[500px] sm:h-[570px] object-cover object-top transition-transform duration-700 hover:scale-105"
                 />
 
                 {/* Subtle soft gradient fade at bottom */}
-                <div className="absolute inset-0 bg-gradient-to-t from-[#0A3D42]/80 via-transparent to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#0A3D42]/90 via-[#0A3D42]/25 to-transparent" />
 
-                <div className="absolute bottom-6 left-6 right-6 text-[#F8EFE7]">
+                <div className="absolute bottom-12 left-6 right-6 text-[#F8EFE7]">
                   <h3 className="font-serif-display text-2xl font-bold">
                     Rebeca Fermiano
                   </h3>
-                  <p className="text-xs text-[#F8EFE7]/85 font-medium mt-0.5">
+                  <p className="text-xs text-[#F8EFE7]/90 font-medium mt-0.5">
                     Especialista em Reprogramação Mental &amp; Cura de Traumas
                   </p>
-                  <p className="text-[11px] text-[#F8EFE7]/70 font-mono mt-1">
+                  <p className="text-[11px] text-[#F8EFE7]/75 font-mono mt-1">
                     Centro, Guarulhos - SP • Atendimento Presencial &amp; Online
                   </p>
                 </div>
               </div>
 
               {/* Voice Intro Player replacing the old badge over the photo */}
-              <VoiceIntroBadge className="absolute -bottom-5 -left-4 sm:-left-6 max-w-[92%] sm:max-w-xs z-20" />
+              <VoiceIntroBadge className="absolute -bottom-6 -left-4 sm:-left-6 max-w-[92%] sm:max-w-xs z-20 shadow-2xl" />
 
             </div>
           </div>
