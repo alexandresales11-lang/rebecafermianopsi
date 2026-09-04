@@ -12,19 +12,19 @@ import {
 import { TestimonialItem } from '../types';
 import { TestimonialAudioPlayer } from './TestimonialAudioPlayer';
 import { VideoTestimonialsCarousel } from './VideoTestimonialsCarousel';
+import { BRUNNA_VOICE_AUDIO, BRUNNA_VOICE_DURATION } from '../data/brunnaVoiceData';
 
 const TESTIMONIALS: TestimonialItem[] = [
   {
     id: '1',
-    name: 'Mariana S.',
-    role: 'Executiva de Finanças',
-    city: 'São Paulo - SP',
-    audioDuration: '0:48',
-    // Coloque a URL do seu áudio real aqui (ex: '/audios/depoimento-mariana.mp3' ou link do WhatsApp/hospedagem)
-    audioUrl: '',
-    tag: 'Hipnoterapia & Síndrome do Impostor',
-    highlight: '“Em poucas sessões dissolvi uma trava de posicionamento de 8 anos.”',
-    text: 'Eu passava noites acordada com crises de ansiedade antes de reuniões com a diretoria. Com a Dra. Rebeca e o acesso direto ao subconsciente, descobrimos o padrão de infância que me fazia sentir inferior. Hoje apresento projetos com naturalidade e segurança absoluta.',
+    name: 'Brunna Mattos',
+    role: 'Paciente em Psicoterapia',
+    city: 'Atendimento Online',
+    audioDuration: BRUNNA_VOICE_DURATION,
+    audioUrl: BRUNNA_VOICE_AUDIO,
+    tag: 'Autoconhecimento & Processo de Cura',
+    highlight: '“A terapia vem abrindo um espaço muito importante de autoconhecimento na minha vida.”',
+    text: 'A terapia que eu faço com a Dra. Rebeca vem abrindo um espaço muito importante na minha vida, um espaço de autoconhecimento, me desafiando como pessoa, me mostrando os pontos que eu tenho que melhorar e enxergando a vida de outra maneira. Anda me fazendo muito bem emocionalmente, e posso dizer até fisicamente. Estou amando o processo de cura que estou fazendo com ela.',
   },
   {
     id: '2',

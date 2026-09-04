@@ -160,6 +160,9 @@ export const TestimonialAudioPlayer: React.FC<TestimonialAudioPlayerProps> = ({
   const handleEnded = () => {
     setIsPlaying(false);
     setCurrentTime(0);
+    if (audioRef.current) {
+      audioRef.current.currentTime = 0;
+    }
   };
 
   const handleSeek = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -189,6 +192,8 @@ export const TestimonialAudioPlayer: React.FC<TestimonialAudioPlayerProps> = ({
           onTimeUpdate={handleTimeUpdate}
           onLoadedMetadata={handleLoadedMetadata}
           onEnded={handleEnded}
+          onPause={() => setIsPlaying(false)}
+          onPlay={() => setIsPlaying(true)}
           preload="metadata"
         />
       )}

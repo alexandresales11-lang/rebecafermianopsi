@@ -2,17 +2,37 @@ import React, { useState, useRef } from 'react';
 import { Play, X, ChevronLeft, ChevronRight, Video, Sparkles } from 'lucide-react';
 import { VideoTestimonialItem } from '../types';
 
+export function extractYouTubeId(url: string): string | null {
+  if (!url) return null;
+  const regExp = /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?|shorts)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/;
+  const match = url.match(regExp);
+  return match && match[1] ? match[1] : null;
+}
+
+export function getYouTubeEmbedUrl(url: string): string | null {
+  const videoId = extractYouTubeId(url);
+  if (!videoId) return null;
+  return `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1&playsinline=1&cc_load_policy=0&iv_load_policy=3&controls=1`;
+}
+
+export function getYouTubeThumbnail(url: string, fallbackThumbnail: string): string {
+  const videoId = extractYouTubeId(url);
+  if (videoId) {
+    return `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
+  }
+  return fallbackThumbnail;
+}
+
 export const VIDEO_TESTIMONIALS: VideoTestimonialItem[] = [
   {
     id: 'vid-1',
     name: 'Beatriz Martins',
-    role: 'Arquiteta & Designer',
+    role: 'Paciente em Psicoterapia',
     city: 'São Paulo - SP',
     theme: 'Superação de Crises de Pânico & Ansiedade',
-    duration: '1:15 min',
-    thumbnailUrl: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=600&q=80',
-    // Pode ser um arquivo .mp4 direto ou link embed do YouTube/Vimeo
-    videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
+    duration: '0:49 min',
+    thumbnailUrl: '/posters/poster-beatriz.jpg',
+    videoUrl: '/videos/depoimento-beatriz.mp4',
   },
   {
     id: 'vid-2',
@@ -20,9 +40,9 @@ export const VIDEO_TESTIMONIALS: VideoTestimonialItem[] = [
     role: 'Empreendedor & Consultor',
     city: 'Guarulhos - SP',
     theme: 'Desbloqueio de Autossabotagem e Carreira',
-    duration: '1:42 min',
-    thumbnailUrl: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=600&q=80',
-    videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
+    duration: '0:46 min',
+    thumbnailUrl: '/posters/poster-rodrigo.jpg',
+    videoUrl: '/videos/depoimento-rodrigo.mp4',
   },
   {
     id: 'vid-3',
@@ -30,19 +50,19 @@ export const VIDEO_TESTIMONIALS: VideoTestimonialItem[] = [
     role: 'Médica Veterinária',
     city: 'Atendimento Online',
     theme: 'Reprogramação Mental e Relações Tóxicas',
-    duration: '1:28 min',
-    thumbnailUrl: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=600&q=80',
-    videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4',
+    duration: '1:03 min',
+    thumbnailUrl: '/posters/poster-camila.jpg',
+    videoUrl: '/videos/depoimento-camila.mp4',
   },
   {
     id: 'vid-4',
-    name: 'Gustavo Mendonça',
-    role: 'Executivo de Tecnologia',
+    name: 'Amanda Ferreira',
+    role: 'Paciente em Psicoterapia',
     city: 'Campinas - SP',
     theme: 'Eliminação da Insônia e Sobrecarga Emocional',
-    duration: '1:35 min',
-    thumbnailUrl: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=600&q=80',
-    videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4',
+    duration: '0:35 min',
+    thumbnailUrl: '/posters/poster-amanda.jpg',
+    videoUrl: '/videos/depoimento-amanda.mp4',
   },
 ];
 
@@ -156,61 +176,78 @@ export const VideoTestimonialsCarousel: React.FC = () => {
       </div>
 
       {/* Video Modal / Lightbox */}
-      {activeVideo && (
-        <div
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-md animate-fadeIn"
-          onClick={() => setActiveVideo(null)}
-          role="dialog"
-          aria-modal="true"
-        >
+      {activeVideo && (() => {
+        const embedUrl = getYouTubeEmbedUrl(activeVideo.videoUrl);
+        const isVertical = activeVideo.videoUrl.includes('shorts') || activeVideo.duration.includes('0:');
+
+        return (
           <div
-            className="relative w-full max-w-2xl bg-[#072B2F] border border-[#F8EFE7]/20 rounded-3xl overflow-hidden shadow-2xl"
-            onClick={(e) => e.stopPropagation()}
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-md animate-fadeIn"
+            onClick={() => setActiveVideo(null)}
+            role="dialog"
+            aria-modal="true"
           >
-            {/* Modal Header */}
-            <div className="flex items-center justify-between px-5 py-4 border-b border-[#F8EFE7]/15 bg-[#0A3D42]">
-              <div>
-                <h4 className="font-serif-display text-lg font-bold text-[#F8EFE7]">
-                  {activeVideo.name}
-                </h4>
-                <p className="text-xs text-[#ECDCCE]">
-                  {activeVideo.theme} ({activeVideo.duration})
-                </p>
+            <div
+              className={`relative w-full ${
+                isVertical ? 'max-w-[340px] sm:max-w-[380px]' : 'max-w-2xl'
+              } mx-auto bg-[#072B2F] border border-[#F8EFE7]/20 rounded-3xl overflow-hidden shadow-2xl transition-all my-auto max-h-[95vh] flex flex-col`}
+              onClick={(e) => e.stopPropagation()}
+            >
+              {/* Modal Header */}
+              <div className="flex items-center justify-between px-5 py-3 border-b border-[#F8EFE7]/15 bg-[#0A3D42] shrink-0">
+                <div>
+                  <h4 className="font-serif-display text-base sm:text-lg font-bold text-[#F8EFE7]">
+                    {activeVideo.name}
+                  </h4>
+                  <p className="text-xs text-[#ECDCCE]">
+                    {activeVideo.theme} ({activeVideo.duration})
+                  </p>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setActiveVideo(null)}
+                  aria-label="Fechar vídeo"
+                  className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 text-[#F8EFE7] flex items-center justify-center transition-colors cursor-pointer shrink-0 ml-2"
+                >
+                  <X className="w-4 h-4" />
+                </button>
               </div>
-              <button
-                type="button"
-                onClick={() => setActiveVideo(null)}
-                aria-label="Fechar vídeo"
-                className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 text-[#F8EFE7] flex items-center justify-center transition-colors"
-              >
-                <X className="w-4 h-4" />
-              </button>
-            </div>
 
-            {/* Video Player Frame */}
-            <div className="relative aspect-video bg-black flex items-center justify-center">
-              <video
-                src={activeVideo.videoUrl}
-                poster={activeVideo.thumbnailUrl}
-                controls
-                autoPlay
-                playsInline
-                className="w-full h-full object-contain"
-              >
-                Seu navegador não suporta a reprodução deste vídeo.
-              </video>
-            </div>
+              {/* Video Player Frame - Edge to Edge, No Side Gaps */}
+              <div className={`relative w-full ${isVertical ? 'aspect-[9/16]' : 'aspect-video'} bg-black flex items-center justify-center overflow-hidden`}>
+                {embedUrl ? (
+                  <iframe
+                    src={embedUrl}
+                    title={`Depoimento de ${activeVideo.name}`}
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowFullScreen
+                    className="w-full h-full border-0"
+                  />
+                ) : (
+                  <video
+                    src={activeVideo.videoUrl}
+                    poster={activeVideo.thumbnailUrl}
+                    controls
+                    autoPlay
+                    playsInline
+                    className="w-full h-full object-cover bg-black"
+                  >
+                    Seu navegador não suporta a reprodução deste vídeo.
+                  </video>
+                )}
+              </div>
 
-            {/* Modal Footer Note */}
-            <div className="px-5 py-3.5 bg-[#0A3D42]/70 text-xs text-[#F8EFE7]/80 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-              <span>{activeVideo.role} • {activeVideo.city}</span>
-              <span className="text-[11px] text-[#ECDCCE] italic">
-                Depoimento real gravado com consentimento do paciente.
-              </span>
+              {/* Modal Footer Note */}
+              <div className="px-5 py-3 bg-[#0A3D42]/70 text-xs text-[#F8EFE7]/80 flex flex-col sm:flex-row sm:items-center justify-between gap-1.5">
+                <span>{activeVideo.role} • {activeVideo.city}</span>
+                <span className="text-[11px] text-[#ECDCCE] italic">
+                  Depoimento gravado com autorização.
+                </span>
+              </div>
             </div>
           </div>
-        </div>
-      )}
+        );
+      })()}
     </div>
   );
 };
