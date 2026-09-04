@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Play, Pause, Volume2 } from 'lucide-react';
+import { Play, Pause } from 'lucide-react';
+import { REBECA_VOICE_AUDIO_BASE64, REBECA_VOICE_DURATION } from '../data/rebecaVoiceData';
 
 interface VoiceIntroBadgeProps {
   className?: string;
@@ -7,71 +8,72 @@ interface VoiceIntroBadgeProps {
 
 export const VoiceIntroBadge: React.FC<VoiceIntroBadgeProps> = ({ className = '' }) => {
   const [isPlaying, setIsPlaying] = useState(false);
-  const [progress, setProgress] = useState(0);
-  const [duration] = useState(58);
-  const audioContextRef = useRef<AudioContext | null>(null);
-  const startTimeRef = useRef<number>(0);
+  const [currentTime, setCurrentTime] = useState(0);
+  const [duration, setDuration] = useState<number>(REBECA_VOICE_DURATION);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
 
-  useEffect(() => {
-    let timer: any;
-    if (isPlaying) {
-      startTimeRef.current = Date.now() - (progress / 100) * duration * 1000;
-      
-      timer = setInterval(() => {
-        const elapsed = (Date.now() - startTimeRef.current) / 1000;
-        if (elapsed >= duration) {
-          setIsPlaying(false);
-          setProgress(0);
-          clearInterval(timer);
-        } else {
-          setProgress((elapsed / duration) * 100);
-        }
-      }, 100);
-    } else {
-      if (timer) clearInterval(timer);
+  // Sync audio duration once loaded
+  const handleLoadedMetadata = () => {
+    if (audioRef.current && audioRef.current.duration && !isNaN(audioRef.current.duration)) {
+      setDuration(Math.round(audioRef.current.duration));
     }
+  };
 
-    return () => {
-      if (timer) clearInterval(timer);
-    };
-  }, [isPlaying, duration]);
+  const handleTimeUpdate = () => {
+    if (audioRef.current) {
+      setCurrentTime(audioRef.current.currentTime);
+    }
+  };
+
+  // When audio finishes playing: reset to initial state with Play icon
+  const handleEnded = () => {
+    setIsPlaying(false);
+    setCurrentTime(0);
+    if (audioRef.current) {
+      audioRef.current.currentTime = 0;
+    }
+  };
+
+  const handlePause = () => {
+    setIsPlaying(false);
+  };
+
+  const handlePlay = () => {
+    setIsPlaying(true);
+  };
 
   const togglePlay = () => {
-    if (!isPlaying) {
-      try {
-        const AudioCtx = window.AudioContext || (window as any).webkitAudioContext;
-        if (AudioCtx) {
-          const ctx = new AudioCtx();
-          audioContextRef.current = ctx;
-          const osc = ctx.createOscillator();
-          const gain = ctx.createGain();
-          osc.type = 'sine';
-          osc.frequency.setValueAtTime(216, ctx.currentTime);
-          gain.gain.setValueAtTime(0.001, ctx.currentTime);
-          gain.gain.exponentialRampToValueAtTime(0.04, ctx.currentTime + 1.2);
-          osc.connect(gain);
-          gain.connect(ctx.destination);
-          osc.start();
+    if (!audioRef.current) return;
 
-          setTimeout(() => {
-            try {
-              gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 4);
-              setTimeout(() => {
-                try {
-                  osc.stop();
-                  ctx.close();
-                } catch (e) {}
-              }, 4100);
-            } catch (e) {}
-          }, 6000);
-        }
-      } catch (e) {
-        // audio context fallback
-      }
-      setIsPlaying(true);
-    } else {
+    if (isPlaying) {
+      audioRef.current.pause();
       setIsPlaying(false);
+    } else {
+      audioRef.current.play().then(() => {
+        setIsPlaying(true);
+      }).catch((err) => {
+        console.warn('Erro ao reproduzir áudio:', err);
+        setIsPlaying(false);
+      });
     }
+  };
+
+  // Pause audio on component unmount
+  useEffect(() => {
+    return () => {
+      if (audioRef.current) {
+        audioRef.current.pause();
+      }
+    };
+  }, []);
+
+  const progress = duration > 0 ? (currentTime / duration) * 100 : 0;
+
+  const formatSeconds = (sec: number) => {
+    const s = Math.floor(sec);
+    const m = Math.floor(s / 60);
+    const remainder = s % 60;
+    return `${m}:${remainder < 10 ? '0' : ''}${remainder}`;
   };
 
   return (
@@ -79,6 +81,18 @@ export const VoiceIntroBadge: React.FC<VoiceIntroBadgeProps> = ({ className = ''
       id="voice-intro-badge"
       className={`bg-[#FCF8F4] border border-[#0A3D42]/25 rounded-2xl p-2.5 sm:p-3 shadow-xl flex items-center gap-3 text-[#0A3D42] transition-all hover:shadow-2xl ${className}`}
     >
+      {/* Elemento de áudio nativo com o arquivo real em Base64 Data URI */}
+      <audio
+        ref={audioRef}
+        src={REBECA_VOICE_AUDIO_BASE64}
+        preload="metadata"
+        onLoadedMetadata={handleLoadedMetadata}
+        onTimeUpdate={handleTimeUpdate}
+        onEnded={handleEnded}
+        onPause={handlePause}
+        onPlay={handlePlay}
+      />
+
       <button
         id="btn-play-voice-intro"
         type="button"
@@ -97,15 +111,15 @@ export const VoiceIntroBadge: React.FC<VoiceIntroBadgeProps> = ({ className = ''
       </button>
 
       <div 
-        className="text-left cursor-pointer select-none pr-1"
+        className="text-left cursor-pointer select-none pr-1 flex-1"
         onClick={togglePlay}
       >
-        <div className="flex items-center gap-1.5">
+        <div className="flex items-center justify-between gap-1.5">
           <span className="font-bold text-xs sm:text-sm text-[#0A3D42] leading-tight">
             {isPlaying ? 'Ouvindo recado de Rebeca...' : 'Recado de Rebeca para você'}
           </span>
-          <span className="text-[10px] sm:text-[11px] text-[#0A3D42]/70 font-mono">
-            {isPlaying ? `${Math.floor((progress / 100) * duration)}s` : '• 60s'}
+          <span className="text-[10px] sm:text-[11px] text-[#0A3D42]/70 font-mono shrink-0">
+            {isPlaying ? `${formatSeconds(currentTime)} / ${formatSeconds(duration)}` : `• ${duration}s`}
           </span>
         </div>
         <p className="text-[#0A3D42]/75 text-[11px] sm:text-xs mt-0.5 leading-tight">
@@ -121,13 +135,13 @@ export const VoiceIntroBadge: React.FC<VoiceIntroBadgeProps> = ({ className = ''
               <span
                 key={i}
                 style={{ 
-                  height: isPlaying ? `${Math.sin(Date.now() / 200 + i) * 30 + 50}%` : `${h}%` 
+                  height: isPlaying ? `${Math.sin((currentTime * 8) + i) * 35 + 55}%` : `${h}%` 
                 }}
                 className={`w-1 rounded-full transition-all duration-150 ${
                   isPlaying && isPassed 
                     ? 'bg-[#0A3D42]' 
                     : isPlaying 
-                    ? 'bg-[#0A3D42]/40' 
+                    ? 'bg-[#0A3D42]/45' 
                     : 'bg-[#0A3D42]/30'
                 }`}
               />

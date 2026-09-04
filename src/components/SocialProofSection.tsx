@@ -7,11 +7,11 @@ import {
   ShieldCheck, 
   Lock, 
   Award, 
-  Sparkles,
-  Volume2,
-  CheckCircle2
+  Sparkles
 } from 'lucide-react';
 import { TestimonialItem } from '../types';
+import { TestimonialAudioPlayer } from './TestimonialAudioPlayer';
+import { VideoTestimonialsCarousel } from './VideoTestimonialsCarousel';
 
 const TESTIMONIALS: TestimonialItem[] = [
   {
@@ -20,6 +20,8 @@ const TESTIMONIALS: TestimonialItem[] = [
     role: 'Executiva de Finanças',
     city: 'São Paulo - SP',
     audioDuration: '0:48',
+    // Coloque a URL do seu áudio real aqui (ex: '/audios/depoimento-mariana.mp3' ou link do WhatsApp/hospedagem)
+    audioUrl: '',
     tag: 'Hipnoterapia & Síndrome do Impostor',
     highlight: '“Em poucas sessões dissolvi uma trava de posicionamento de 8 anos.”',
     text: 'Eu passava noites acordada com crises de ansiedade antes de reuniões com a diretoria. Com a Dra. Rebeca e o acesso direto ao subconsciente, descobrimos o padrão de infância que me fazia sentir inferior. Hoje apresento projetos com naturalidade e segurança absoluta.',
@@ -30,6 +32,7 @@ const TESTIMONIALS: TestimonialItem[] = [
     role: 'Empresário',
     city: 'Guarulhos - SP',
     audioDuration: '1:05',
+    audioUrl: '',
     tag: 'Mentoria Hipnótica & Prosperidade',
     highlight: '“Eliminei a autossabotagem e dobrei a capacidade de tomada de decisão.”',
     text: 'Toda vez que minha empresa começava a crescer, eu tomava decisões que me devolviam à estaca zero. A mentoria hipnótica reprogramou minha crença de merecimento. Foi como tirar uma venda dos olhos e um peso de 100kg das costas.',
@@ -40,6 +43,7 @@ const TESTIMONIALS: TestimonialItem[] = [
     role: 'Arquiteta',
     city: 'Atendimento Online',
     audioDuration: '0:52',
+    audioUrl: '',
     tag: 'Psicoterapia Integrativa & Traumas',
     highlight: '“O acolhimento da Dra. Rebeca me fez renascer após um término destrutivo.”',
     text: 'Eu vivia repetindo o mesmo ciclo em relações tóxicas e sentia que o problema era comigo. A abordagem com psicanálise e hipnose me devolveu a dignidade e a autoestima. Sinto que renasci para a minha melhor versão.',
@@ -50,6 +54,7 @@ const TESTIMONIALS: TestimonialItem[] = [
     role: 'Gestora de Pessoas',
     city: 'São Paulo - SP',
     audioDuration: '1:12',
+    audioUrl: '',
     tag: 'Crises de Pânico & Ansiedade',
     highlight: '“Voltei a dirigir e viajar sem medo de ter crises de pânico.”',
     text: 'Tentava diversas abordagens tradicionais há anos sem alívio efetivo. A desconstrução dos gatilhos traumáticos com a Dra. Rebeca foi o divisor de águas mais impactante da minha vida.',
@@ -120,11 +125,14 @@ export const SocialProofSection: React.FC = () => {
                 {current.tag}
               </span>
 
-              {/* Audio badge simulator */}
-              <div className="flex items-center gap-1.5 text-xs text-[#0A3D42] bg-[#ECDCCE]/60 px-3 py-1 rounded-full">
-                <Volume2 className="w-3.5 h-3.5 text-[#0A3D42]" />
-                <span>Depoimento em áudio verificado ({current.audioDuration})</span>
-              </div>
+              {/* Interactive Real Audio Player */}
+              <TestimonialAudioPlayer
+                key={current.id}
+                testimonialId={current.id}
+                authorName={current.name}
+                audioDuration={current.audioDuration}
+                audioUrl={current.audioUrl}
+              />
             </div>
 
             {/* Quote Highlight */}
@@ -192,6 +200,9 @@ export const SocialProofSection: React.FC = () => {
             </div>
           </div>
         </div>
+
+        {/* Video Testimonials Carousel */}
+        <VideoTestimonialsCarousel />
 
         {/* Strategic Trust Badges Grid */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 pt-4">
