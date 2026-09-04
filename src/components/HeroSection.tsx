@@ -41,7 +41,8 @@ export const HeroSection: React.FC = () => {
                     referrerPolicy="no-referrer"
                     className="w-full h-[400px] sm:h-[460px] object-cover object-top"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#0A3D42]/90 via-[#0A3D42]/20 to-transparent" />
+                  {/* Clean natural bottom shadow purely for text readability (No green tint or smoke layer) */}
+                  <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-black/85 via-black/40 to-transparent pointer-events-none" />
                   <div className="absolute bottom-4 left-4 right-4 text-[#F8EFE7] text-left">
                     <h3 className="font-serif-display text-xl sm:text-2xl font-bold">
                       Rebeca Fermiano
@@ -122,8 +123,8 @@ export const HeroSection: React.FC = () => {
                   className="w-full h-[500px] sm:h-[570px] object-cover object-top transition-transform duration-700 hover:scale-105"
                 />
 
-                {/* Subtle soft gradient fade at bottom */}
-                <div className="absolute inset-0 bg-gradient-to-t from-[#0A3D42]/90 via-[#0A3D42]/25 to-transparent" />
+                {/* Clean natural bottom shadow purely for text readability (No green tint or smoke layer) */}
+                <div className="absolute inset-x-0 bottom-0 h-36 bg-gradient-to-t from-black/85 via-black/40 to-transparent pointer-events-none" />
 
                 <div className="absolute bottom-12 left-6 right-6 text-[#F8EFE7]">
                   <h3 className="font-serif-display text-2xl font-bold">

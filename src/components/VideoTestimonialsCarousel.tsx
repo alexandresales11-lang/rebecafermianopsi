@@ -138,8 +138,9 @@ export const VideoTestimonialsCarousel: React.FC = () => {
               loading="lazy"
             />
 
-            {/* Gradient Overlays for Elegance and Readability */}
-            <div className="absolute inset-0 bg-gradient-to-t from-[#0A3D42] via-[#0A3D42]/30 to-black/30" />
+            {/* Natural bottom/top shadow gradients purely for text contrast (No color tint, no smoke overlay) */}
+            <div className="absolute inset-x-0 top-0 h-16 bg-gradient-to-b from-black/50 via-black/15 to-transparent pointer-events-none" />
+            <div className="absolute inset-x-0 bottom-0 h-36 bg-gradient-to-t from-black/90 via-black/50 to-transparent pointer-events-none" />
 
             {/* Top Badges */}
             <div className="absolute top-3 left-3 right-3 flex items-center justify-between z-10">
@@ -178,23 +179,24 @@ export const VideoTestimonialsCarousel: React.FC = () => {
       {/* Video Modal / Lightbox */}
       {activeVideo && (() => {
         const embedUrl = getYouTubeEmbedUrl(activeVideo.videoUrl);
-        const isVertical = activeVideo.videoUrl.includes('shorts') || activeVideo.duration.includes('0:');
+        // All four testimonial stories are vertical 9:16 portrait videos recorded on smartphone
+        const isVertical = !activeVideo.videoUrl.includes('horizontal') && !activeVideo.videoUrl.includes('16x9');
 
         return (
           <div
-            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-md animate-fadeIn"
+            className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/85 backdrop-blur-md animate-fadeIn"
             onClick={() => setActiveVideo(null)}
             role="dialog"
             aria-modal="true"
           >
             <div
               className={`relative w-full ${
-                isVertical ? 'max-w-[340px] sm:max-w-[380px]' : 'max-w-2xl'
-              } mx-auto bg-[#072B2F] border border-[#F8EFE7]/20 rounded-3xl overflow-hidden shadow-2xl transition-all my-auto max-h-[95vh] flex flex-col`}
+                isVertical ? 'max-w-[340px] sm:max-w-[375px]' : 'max-w-2xl'
+              } mx-auto bg-[#072B2F] border border-[#F8EFE7]/20 rounded-3xl overflow-hidden shadow-2xl transition-all my-auto max-h-[92vh] flex flex-col`}
               onClick={(e) => e.stopPropagation()}
             >
               {/* Modal Header */}
-              <div className="flex items-center justify-between px-5 py-3 border-b border-[#F8EFE7]/15 bg-[#0A3D42] shrink-0">
+              <div className="flex items-center justify-between px-4 sm:px-5 py-3 border-b border-[#F8EFE7]/15 bg-[#0A3D42] shrink-0">
                 <div>
                   <h4 className="font-serif-display text-base sm:text-lg font-bold text-[#F8EFE7]">
                     {activeVideo.name}
@@ -213,7 +215,7 @@ export const VideoTestimonialsCarousel: React.FC = () => {
                 </button>
               </div>
 
-              {/* Video Player Frame - Edge to Edge, No Side Gaps */}
+              {/* Video Player Frame - Edge to Edge, Perfectly Centered Without Cropping */}
               <div className={`relative w-full ${isVertical ? 'aspect-[9/16]' : 'aspect-video'} bg-black flex items-center justify-center overflow-hidden`}>
                 {embedUrl ? (
                   <iframe
@@ -225,12 +227,14 @@ export const VideoTestimonialsCarousel: React.FC = () => {
                   />
                 ) : (
                   <video
+                    key={activeVideo.videoUrl}
                     src={activeVideo.videoUrl}
                     poster={activeVideo.thumbnailUrl}
                     controls
                     autoPlay
                     playsInline
-                    className="w-full h-full object-cover bg-black"
+                    preload="auto"
+                    className="w-full h-full object-contain bg-black"
                   >
                     Seu navegador não suporta a reprodução deste vídeo.
                   </video>

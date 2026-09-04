@@ -28,7 +28,8 @@ export const AboutSection: React.FC = () => {
                 referrerPolicy="no-referrer"
                 className="w-full h-[460px] sm:h-[520px] object-cover object-top transition-transform duration-700 group-hover:scale-105"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#0A3D42]/70 via-transparent to-transparent" />
+              {/* Clean natural bottom shadow purely for text readability (No green tint or smoke layer) */}
+              <div className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-black/80 via-black/35 to-transparent pointer-events-none" />
               
               <div className="absolute bottom-6 left-6 right-6 text-[#F8EFE7] space-y-1">
                 <h3 className="font-serif-display text-2xl font-bold">

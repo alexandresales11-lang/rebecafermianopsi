@@ -203,7 +203,8 @@ export const PillarsSection: React.FC = () => {
                     referrerPolicy="no-referrer"
                     className="w-full h-80 sm:h-96 object-cover object-top transition-transform duration-700 group-hover:scale-105"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#0A3D42]/80 via-transparent to-transparent" />
+                  {/* Clean natural bottom shadow purely for text readability (No green tint or smoke layer) */}
+                  <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-black/70 to-transparent pointer-events-none" />
                   {activePillar.imageCaption && (
                     <div className="absolute bottom-4 left-4 right-4 text-[#F8EFE7] text-xs font-medium backdrop-blur-sm bg-[#0A3D42]/40 py-1.5 px-3 rounded-lg border border-[#F8EFE7]/20">
                       {activePillar.imageCaption}

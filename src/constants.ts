@@ -7,10 +7,10 @@ export const CONTACT_INFO = {
   whatsappDisplay: '+55 (11) 98035-3174',
   address: 'Dr. Ramos Azevedo, 159 - Centro, Guarulhos - SP',
   mapsUrl: 'https://maps.app.goo.gl/tM3Sz4fiBq1UADGy8',
-  mainPhoto: 'https://i.imgur.com/QDdnlcG.jpeg',
-  aboutPhoto: 'https://i.imgur.com/4HUfRy7.jpeg',
-  speakerPhoto: 'https://i.imgur.com/nygynNF.jpeg',
-  logoUrl: 'https://i.imgur.com/JoVCEtu.png',
+  mainPhoto: '/images/rebeca-hero.jpg',
+  aboutPhoto: '/images/rebeca-about.jpg',
+  speakerPhoto: '/images/rebeca-speaker.jpg',
+  logoUrl: '/images/rebeca-logo.png',
 };
 
 export const COLOR_PALETTE = {
