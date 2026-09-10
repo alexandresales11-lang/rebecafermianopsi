@@ -43,8 +43,8 @@ const PILLARS: Pillar[] = [
     ],
     ctaText: 'Agendar Consulta de Psicoterapia & Hipnose',
     whatsappMessage: 'Olá, Dra. Rebeca! Gostaria de agendar uma consulta de Psicoterapia Integrativa & Hipnoterapia Clínica (presencial/online). Como podemos prosseguir?',
-    image: CONTACT_INFO.aboutPhoto,
-    imageCaption: 'Dra. Rebeca Fermiano no consultório acolhedor',
+    image: CONTACT_INFO.therapyPhoto || 'https://i.imgur.com/Tu9MzYP.jpeg',
+    imageCaption: 'Dra. Rebeca Fermiano',
   },
   {
     id: 'mentoria',
@@ -63,7 +63,7 @@ const PILLARS: Pillar[] = [
     ctaText: 'Quero Minha Vaga na Mentoria Hipnótica',
     whatsappMessage: 'Olá, Dra. Rebeca! Gostaria de saber mais sobre a Mentoria Hipnótica para acelerar meus resultados e destravar bloqueios. Como funciona o processo seletivo?',
     image: CONTACT_INFO.mainPhoto,
-    imageCaption: 'Estratégia e clareza com a Dra. Rebeca Fermiano',
+    imageCaption: 'Dra. Rebeca Fermiano',
   },
   {
     id: 'palestras',
@@ -82,7 +82,7 @@ const PILLARS: Pillar[] = [
     ctaText: 'Solicitar Proposta para Palestras',
     whatsappMessage: 'Olá, equipe da Dra. Rebeca Fermiano! Gostaria de solicitar uma proposta para realização de palestra/treinamento corporativo. Poderiam me orientar?',
     image: CONTACT_INFO.speakerPhoto,
-    imageCaption: 'Dra. Rebeca Fermiano em conferências e palestras',
+    imageCaption: 'Dra. Rebeca Fermiano',
   },
 ];
 
@@ -195,18 +195,23 @@ export const PillarsSection: React.FC = () => {
               </div>
 
               {/* Right Column: Contextual Curated Image */}
-              <div className="lg:col-span-5">
-                <div className="relative rounded-2xl overflow-hidden shadow-md border border-[#0A3D42]/20 group">
+              <div className="lg:col-span-5 flex justify-center">
+                <div className="relative rounded-2xl overflow-hidden shadow-md border border-[#0A3D42]/20 group aspect-[2/3] w-full max-w-[420px]">
                   <img
                     src={activePillar.image}
                     alt={activePillar.title}
                     referrerPolicy="no-referrer"
-                    className="w-full h-80 sm:h-96 object-cover object-top transition-transform duration-700 group-hover:scale-105"
+                    onError={(e) => {
+                      if (activePillar.id === 'psicoterapia') {
+                        (e.target as HTMLImageElement).src = 'https://i.imgur.com/Tu9MzYP.jpeg';
+                      }
+                    }}
+                    className="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-105"
                   />
-                  {/* Clean natural bottom shadow purely for text readability (No green tint or smoke layer) */}
-                  <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-black/70 to-transparent pointer-events-none" />
+                  {/* Clean natural bottom shadow for text readability */}
+                  <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-black/60 to-transparent pointer-events-none" />
                   {activePillar.imageCaption && (
-                    <div className="absolute bottom-4 left-4 right-4 text-[#F8EFE7] text-xs font-medium backdrop-blur-sm bg-[#0A3D42]/40 py-1.5 px-3 rounded-lg border border-[#F8EFE7]/20">
+                    <div className="absolute bottom-4 left-4 right-4 text-[#F8EFE7] text-xs font-medium backdrop-blur-sm bg-[#0A3D42]/60 py-2 px-3 rounded-lg border border-[#F8EFE7]/20 text-center shadow-sm">
                       {activePillar.imageCaption}
                     </div>
                   )}

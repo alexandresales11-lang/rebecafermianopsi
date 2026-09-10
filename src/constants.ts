@@ -9,6 +9,7 @@ export const CONTACT_INFO = {
   mapsUrl: 'https://maps.app.goo.gl/tM3Sz4fiBq1UADGy8',
   mainPhoto: '/images/rebeca-hero.jpg',
   aboutPhoto: '/images/rebeca-about.jpg',
+  therapyPhoto: '/images/rebeca-psicoterapia.jpg',
   speakerPhoto: '/images/rebeca-speaker.jpg',
   logoUrl: '/images/rebeca-logo.png',
 };
