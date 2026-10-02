@@ -36,7 +36,7 @@ export const AboutSection: React.FC = () => {
                   Rebeca Fermiano
                 </h3>
                 <p className="text-xs text-[#F8EFE7]/85 font-medium">
-                  Psicanálise Clínica • Hipnoterapia • Mentoria de Alta Performance
+                  Psicóloga • Psicanalista • Hipnoterapeuta
                 </p>
               </div>
             </div>
@@ -58,27 +58,44 @@ export const AboutSection: React.FC = () => {
                 Quem é Rebeca Fermiano
               </span>
               <h2 className="font-serif-display text-3xl sm:text-4xl lg:text-5xl text-[#0A3D42] font-semibold leading-tight">
-                Ciência, Empatia e Precisão no Cuidado com a Sua Mente
+                Ciência, Empatia e Precisão no Cuidado com a Sua Mente.
               </h2>
-              <p className="text-base sm:text-lg text-[#0A3D42]/85 font-medium leading-snug">
-                "Não acredito em processos terapêuticos sem fim que mantêm a pessoa presa à própria dor. Meu compromisso é fornecer ferramentas reais para você reprogramar a mente e renascer com autonomia."
+              <p className="text-lg sm:text-xl text-[#0A3D42] font-serif-display font-medium italic leading-snug">
+                Eu também precisei me reconstruir.
               </p>
             </div>
 
-            <div className="space-y-4 text-sm sm:text-base text-[#0A3D42]/80 leading-relaxed">
+            <div className="space-y-4 text-sm sm:text-base text-[#0A3D42]/85 leading-relaxed">
               <p>
-                Com formação sólida em <strong>Psicanálise Clínica</strong> e especialização avançada em <strong>Hipnoterapia Neurocientífica</strong>, Rebeca Fermiano atua na vanguarda do desenvolvimento humano e da saúde mental integrativa.
+                Minha trajetória nasceu da Psicologia e de uma busca profunda por compreender os processos que influenciam nossas emoções, comportamentos e escolhas.
               </p>
               <p>
-                Sua abordagem une o acolhimento profundo da escuta psicanalítica à velocidade transformadora da hipnose clínica. O foco não é apenas aliviar os sintomas superficiais, mas identificar a matriz inconsciente do sofrimento — ressignificando traumas passados e libertando o potencial bloqueado.
+                Sou <strong>Psicóloga, Psicanalista e Hipnoterapeuta</strong>, e integro diferentes recursos terapêuticos para ajudar você a compreender sua história, identificar padrões e ressignificar experiências que ainda impactam sua vida.
               </p>
+              
+              <div className="border-l-4 border-[#0A3D42] pl-4 py-2 bg-[#FCF8F4]/80 rounded-r-xl">
+                <p className="font-serif-display text-base sm:text-lg text-[#0A3D42] font-medium leading-snug">
+                  Não se trata de apagar o passado.<br />
+                  <span className="font-semibold text-[#0A3D42]">Trata-se de deixar de ser conduzida por ele.</span>
+                </p>
+              </div>
+
+              <p>
+                Meu propósito é oferecer um processo terapêutico profundo, humanizado e direcionado à construção de consciência, autonomia e novas possibilidades de viver.
+              </p>
+
+              <div className="bg-[#FCF8F4] border border-[#0A3D42]/20 rounded-xl p-3.5 text-center sm:text-left shadow-xs">
+                <p className="font-serif-display text-sm sm:text-base font-semibold text-[#0A3D42]">
+                  Compreenda sua história. Transforme seus padrões. Reconstrua sua relação consigo mesma.
+                </p>
+              </div>
             </div>
 
             {/* Credential highlights */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
               <div className="bg-[#FCF8F4] border border-[#0A3D42]/15 rounded-xl p-3.5 flex items-center gap-3 text-xs sm:text-sm text-[#0A3D42]">
                 <BookOpen className="w-4 h-4 text-[#0A3D42] shrink-0" />
-                <span className="font-medium">Psicanálise Clínica &amp; Terapia Integrativa</span>
+                <span className="font-medium">Psicologia &amp; Psicanálise Clínica</span>
               </div>
               <div className="bg-[#FCF8F4] border border-[#0A3D42]/15 rounded-xl p-3.5 flex items-center gap-3 text-xs sm:text-sm text-[#0A3D42]">
                 <Sparkles className="w-4 h-4 text-[#0A3D42] shrink-0" />
@@ -86,11 +103,11 @@ export const AboutSection: React.FC = () => {
               </div>
               <div className="bg-[#FCF8F4] border border-[#0A3D42]/15 rounded-xl p-3.5 flex items-center gap-3 text-xs sm:text-sm text-[#0A3D42]">
                 <HeartHandshake className="w-4 h-4 text-[#0A3D42] shrink-0" />
-                <span className="font-medium">Mentoria Pessoal &amp; Executiva</span>
+                <span className="font-medium">Processo Humanizado &amp; Autonomia</span>
               </div>
               <div className="bg-[#FCF8F4] border border-[#0A3D42]/15 rounded-xl p-3.5 flex items-center gap-3 text-xs sm:text-sm text-[#0A3D42]">
                 <Award className="w-4 h-4 text-[#0A3D42] shrink-0" />
-                <span className="font-medium">Palestrante em Saúde Mental &amp; Liderança</span>
+                <span className="font-medium">Atendimento Presencial &amp; Online</span>
               </div>
             </div>
 

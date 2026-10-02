@@ -19,6 +19,8 @@ interface Pillar {
   title: string;
   subtitle: string;
   description: string;
+  secondaryDescription?: string;
+  differentialsHeader?: string;
   differentials: string[];
   ctaText: string;
   whatsappMessage: string;
@@ -34,12 +36,13 @@ const PILLARS: Pillar[] = [
     icon: Brain,
     title: 'Psicoterapia Integrativa & Hipnoterapia Clínica',
     subtitle: 'Acesse e ressignifique a dor onde ela realmente se originou.',
-    description: 'Um método que harmoniza a profundidade reflexiva da Psicanálise com a precisão neurocientífica da Hipnoterapia Clínica. Diferente de abordagens que levam anos apenas no nível racional, acessamos o subconsciente de forma 100% consciente e segura para dissolver traumas, crises de ansiedade, fobias e feridas emocionais na exata raiz neural.',
+    description: 'Um método que integra a Psicoterapia e Hipnoterapia, unindo a profundidade da compreensão emocional aos recursos terapêuticos que atuam nos processos conscientes e inconscientes.',
+    secondaryDescription: 'Mais do que compreender racionalmente o que acontece, a abordagem busca acessar padrões emocionais, experiências e memórias que podem estar relacionados à ansiedade, medos, fobias, traumas e bloqueios, favorecendo uma ressignificação profunda e consciente.',
+    differentialsHeader: 'Pilares da transformação:',
     differentials: [
-      'Alívio acelerado de dores emocionais crônicas e traumas do passado',
-      'Desativação de gatilhos inconscientes de ansiedade, culpa e angústia',
-      'Ressignificação de memórias dolorosas sem perda de controle ou sono',
-      'Ambiente estritamente ético, acolhedor e confidencial (presencial em Guarulhos ou online)',
+      'Compreenda a origem.',
+      'Ressignifique a experiência.',
+      'Transforme o presente.',
     ],
     ctaText: 'Agendar Consulta de Psicoterapia & Hipnose',
     whatsappMessage: 'Olá, Dra. Rebeca! Gostaria de agendar uma consulta de Psicoterapia Integrativa & Hipnoterapia Clínica (presencial/online). Como podemos prosseguir?',
@@ -156,23 +159,41 @@ export const PillarsSection: React.FC = () => {
                   </p>
                 </div>
 
-                <p className="text-sm sm:text-base text-[#0A3D42]/75 leading-relaxed">
-                  {activePillar.description}
-                </p>
+                <div className="space-y-3.5">
+                  <p className="text-sm sm:text-base text-[#0A3D42]/80 leading-relaxed">
+                    {activePillar.description}
+                  </p>
+                  {activePillar.secondaryDescription && (
+                    <p className="text-sm sm:text-base text-[#0A3D42]/80 leading-relaxed">
+                      {activePillar.secondaryDescription}
+                    </p>
+                  )}
+                </div>
 
-                {/* Differential points */}
+                {/* Differential points / Pilares de transformação */}
                 <div className="space-y-3 pt-2">
                   <h4 className="text-xs uppercase tracking-wider font-semibold text-[#0A3D42]/70">
-                    O que esperar do atendimento:
+                    {activePillar.differentialsHeader || 'O que esperar do atendimento:'}
                   </h4>
-                  <div className="space-y-2.5">
-                    {activePillar.differentials.map((item, i) => (
-                      <div key={i} className="flex items-start gap-3 text-xs sm:text-sm text-[#0A3D42]">
-                        <CheckCircle2 className="w-4 h-4 text-[#0A3D42] shrink-0 mt-0.5" />
-                        <span className="leading-snug text-[#0A3D42]/85">{item}</span>
-                      </div>
-                    ))}
-                  </div>
+                  {activePillar.id === 'psicoterapia' ? (
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                      {activePillar.differentials.map((item, i) => (
+                        <div key={i} className="bg-[#0A3D42]/5 border border-[#0A3D42]/15 rounded-xl p-3.5 text-center flex flex-col items-center justify-center shadow-xs">
+                          <CheckCircle2 className="w-5 h-5 text-[#0A3D42] mb-1.5 shrink-0" />
+                          <span className="text-xs sm:text-sm font-semibold text-[#0A3D42] leading-snug">{item}</span>
+                        </div>
+                      ))}
+                    </div>
+                  ) : (
+                    <div className="space-y-2.5">
+                      {activePillar.differentials.map((item, i) => (
+                        <div key={i} className="flex items-start gap-3 text-xs sm:text-sm text-[#0A3D42]">
+                          <CheckCircle2 className="w-4 h-4 text-[#0A3D42] shrink-0 mt-0.5" />
+                          <span className="leading-snug text-[#0A3D42]/85">{item}</span>
+                        </div>
+                      ))}
+                    </div>
+                  )}
                 </div>
 
                 {/* Pillar CTA */}

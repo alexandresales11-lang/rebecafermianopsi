@@ -71,7 +71,7 @@ export const MethodologySection: React.FC = () => {
             A Metodologia
           </span>
           <h2 className="font-serif-display text-3xl sm:text-4xl lg:text-5xl text-[#0A3D42] font-semibold leading-tight">
-            O Processo de Renascimento em 3 Etapas
+            O processo de transformação em 3 etapas
           </h2>
           <p className="text-sm sm:text-base text-[#0A3D42]/75 leading-relaxed">
             Uma abordagem didática e estruturada que não se apoia em achismos, mas na integração da psicanálise clássica com a neurociência da hipnoterapia.

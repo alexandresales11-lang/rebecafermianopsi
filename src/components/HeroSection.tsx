@@ -28,7 +28,7 @@ export const HeroSection: React.FC = () => {
             
             {/* 1. Headline Principal */}
             <h1 className="font-serif-display text-4xl sm:text-5xl lg:text-6xl text-[#0A3D42] font-semibold tracking-tight leading-[1.12]">
-              Dissolva traumas e <span className="italic font-normal underline decoration-[#0A3D42]/30 underline-offset-4">reprograme sua mente</span> direto na raiz através da Psicanálise e da Hipnoterapia Clínica.
+              Ressignifique seus traumas e <span className="italic font-normal underline decoration-[#0A3D42]/30 underline-offset-4">reprograme sua mente</span> direto na raiz através da Psicanálise e da Hipnoterapia Clínica.
             </h1>
 
             {/* 2. Photo + Audio Badge on MOBILE ONLY (Immediately after headline) */}

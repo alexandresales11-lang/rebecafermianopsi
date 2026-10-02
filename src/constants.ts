@@ -1,6 +1,6 @@
 export const CONTACT_INFO = {
   name: 'Rebeca Fermiano',
-  role: 'Psicanalista & Hipnoterapeuta Clínica',
+  role: 'Psicóloga, Psicanalista & Hipnoterapeuta',
   instagram: 'psicoanalista_rebeca',
   instagramUrl: 'https://instagram.com/psicoanalista_rebeca',
   whatsappNumber: '5511980353174',
